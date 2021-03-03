@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class ArayList <E> implements Stack <E>{
-    ArrayList<E> stack;
+    private ArrayList<E> stack;
     public ArayList(){
         stack = new ArrayList<E>();
     }

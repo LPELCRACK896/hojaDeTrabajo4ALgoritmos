@@ -1,7 +1,7 @@
 import java.util.Vector;
 
 public class Vectorr <E> implements Stack<E>{
-    Vector<E> stack;
+    private Vector<E> stack;
 
     public Vectorr(){
         stack= new Vector<E>(0);
