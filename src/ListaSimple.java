@@ -1,5 +1,9 @@
 public class ListaSimple <E>extends Lista<E>{
     protected Nodo <E>inicio, fin;
+    public ListaSimple(){
+        inicio=null;
+        fin=null;
+    }
     @Override
     public void push(E item) {
         if(!empty()){
