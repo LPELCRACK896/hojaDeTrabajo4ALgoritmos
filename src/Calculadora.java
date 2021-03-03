@@ -4,7 +4,7 @@ import javax.script.ScriptException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Stack;
+
 
 import java.lang.NumberFormatException;
 
@@ -15,7 +15,7 @@ import java.lang.NumberFormatException;
  */
 public class Calculadora {
 
-    private Stack < Double > stack = new Stack < Double > ();
+    private Stack < Double > stack;
     private String[] operadores = {
         "+",
         "-",
@@ -26,7 +26,10 @@ public class Calculadora {
     /**
      * Constructor vacio
      */
-    public Calculadora() {}
+    public Calculadora(String tipoDeStack) {
+        stack = FabricaStacks.construir(tipoDeStack);
+
+    }
 
     
     /** 
