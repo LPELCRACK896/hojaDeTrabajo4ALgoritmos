@@ -1,10 +1,7 @@
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-
 
 import java.lang.NumberFormatException;
 
@@ -15,7 +12,8 @@ import java.lang.NumberFormatException;
  */
 public class Calculadora {
 
-    private Stack < Double > stack;
+    private static Calculadora calculadora;
+    private Stack < String > stack;
     private String[] operadores = {
         "+",
         "-",
@@ -24,95 +22,53 @@ public class Calculadora {
     };
 
     /**
-     * Constructor vacio
+     * Constructor privado Singleton
      */
-    public Calculadora(String tipoDeStack) {
-        stack = FabricaStacks.construir(tipoDeStack);
+    private Calculadora() { }
 
+    public void setStack(String tipo, String lista) {
+        this.stack = FabricaStacks.construir(tipo, lista);
     }
 
-    
+    /**
+     * Funcion obtener instancia
+     * @return Calculadora
+     */
+    public static Calculadora getInstance() {
+        if(calculadora == null) {
+            calculadora = new Calculadora();
+        }
+        return calculadora;
+    }
+
     /** 
      * @param input
      * @return double
      */
-    public double resolver(String input) {
+    public String resolver(String input) {
         String[] comandos = input.split(" ");
         for (int i = 0; i < comandos.length; i++) {
-            if (!comandos[i].equals(" ")) {
-                if (!Arrays.asList(operadores).contains(comandos[i])) {
-                    try {
-                        push(Double.parseDouble(comandos[i]));
-                    } catch(NumberFormatException e) {
-                        System.out.println("El achivo '.txt' no tiene el formato correcto");
-                        return Double.NaN;
-                    }
-                } else {
-                    int largo = size();
-                    ArrayList < Double > operandos_ordenados = new ArrayList < > ();
-                    for (int j = 0; j < largo; j++) {
-                        operandos_ordenados.add(pop());
-                    }
-                    if (operandos_ordenados.size() > 1) {
-                        Double resultado = operandos_ordenados.get(operandos_ordenados.size() - 1);
-                        for (int j = (operandos_ordenados.size() - 2); j > -1; j--) {
-                            ScriptEngineManager mgr = new ScriptEngineManager();
-                            ScriptEngine engine = mgr.getEngineByName("JavaScript");
-                            try {
-                                resultado = (double) engine.eval(resultado + " " + comandos[i] + String.valueOf(operandos_ordenados.get(j)));
-                            } catch (ScriptException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        push(resultado);
-                    } else {
-                        System.out.println("El achivo '.txt' no tiene el formato correcto.");
-                        return Double.NaN;
-                    }
+            if (!Arrays.asList(operadores).contains(comandos[i])) {
+                try {
+                    this.stack.push((comandos[i]));
+                } catch (NumberFormatException e) {
+                    System.out.println("El achivo '.txt' no tiene el formato correcto");
+                    return "NaN";
+                }
+            } else {
+                String valor_final = this.stack.pop();
+                String valor_inicial = this.stack.pop();
+                ScriptEngineManager mgr = new ScriptEngineManager();
+                ScriptEngine engine = mgr.getEngineByName("JavaScript");
+                try {
+                    String resultado = String.valueOf(engine.eval(valor_inicial + " " + comandos[i] + " " + valor_final));
+                    this.stack.push(resultado);
+                } catch (ScriptException e) {
+                    e.printStackTrace();
                 }
             }
         }
-        return pop();
-    }
-
-    
-    /** 
-     * @return boolean
-     */
-    public boolean empty() {
-        return stack.empty();
-    }
-
-    
-    /** 
-     * @return int
-     */
-    public int size() {
-        return stack.size();
-    }
-
-    
-    /** 
-     * @param item
-     */
-    public void push(Double item) {
-        stack.push(item);
-    }
-
-    
-    /** 
-     * @return Double
-     */
-    public Double pop() {
-        return stack.pop();
-    }
-
-    
-    /** 
-     * @return Double
-     */
-    public Double peek() {
-        return stack.peek();
+        return this.stack.pop();
     }
 
 }

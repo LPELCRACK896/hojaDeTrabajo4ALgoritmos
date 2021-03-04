@@ -23,17 +23,28 @@ public class Lector {
          br = new BufferedReader(fr);
 
          String[] linea = br.readLine().split(" ");
-         Stack<String> pila = new Stack<String>();
-         for(int i = 0; i < linea.length; i++) {
+         Stack < String > pila = new Stack < String > ();
+         for (int i = 0; i < linea.length; i++) {
             try {
                int numero = Integer.parseInt(linea[i]);
                salida = salida + linea[i] + " ";
             } catch (Exception e0) {
-               pila.add(linea[i]);
+               if (!linea[i].equals(")")) {
+                  if (pila.size() >= 1) {
+                     if (pila.peek().equals("*") || pila.peek().equals("/")) {
+                        for (int j = pila.size(); j > 0; j--) {
+                           salida = salida + pila.pop() + " ";
+                        }
+                     }
+                  }
+                  pila.add(linea[i]);
+               } else {
+                  salida = salida + pila.pop() + " ";
+                  pila.clear();
+               }
             }
          }
-         System.out.println(pila.toString());
-         for(int j = pila.size(); j > 0; j--) { 
+         for (int j = pila.size(); j > 0; j--) {
             salida = salida + pila.pop() + " ";
          }
       } catch (Exception e) {
