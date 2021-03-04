@@ -4,6 +4,11 @@ public class ListaSimple <E>extends Lista<E>{
         inicio=null;
         fin=null;
     }
+
+    /**
+     *
+     * @param item ingresa el item a agregar (pushear)
+     */
     @Override
     public void push(E item) {
         if(!empty()){
@@ -15,6 +20,10 @@ public class ListaSimple <E>extends Lista<E>{
         }
     }
 
+    /**
+     *
+     * @return devuelve el valor eliminado
+     */
     @Override
     public E pop() {
         E temporal=fin.valor;
@@ -30,17 +39,29 @@ public class ListaSimple <E>extends Lista<E>{
         return temporal;
     }
 
+    /**
+     *
+     * @return devuelve el ultimo valor agregado al statck
+     */
     @Override
     public E peek() {
         return fin.valor;
     }
 
+    /**
+     *
+     * @return deuelve boolean indicando si el stack esta vacio
+     */
     @Override
     public boolean empty() {
         if (inicio==null) return true;
         else return false;
     }
 
+    /**
+     *
+     * @return devielve el tamano del stack
+     */
     @Override
     public int size() {
         int contador=0;

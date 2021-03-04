@@ -7,11 +7,20 @@ public class Vectorr <E> implements Stack<E>{
         stack= new Vector<E>(0);
 
     }
+
+    /**
+     *
+     * @param item ingresa el item a agregar (pushear)
+     */
     @Override
     public void push(E item) {
         stack.add(item);
     }
 
+    /**
+     *
+     * @return devuelve el valor eliminado
+     */
     @Override
     public E pop() {
         if(stack.isEmpty())return null;
@@ -22,17 +31,29 @@ public class Vectorr <E> implements Stack<E>{
         }
     }
 
+    /**
+     *
+     * @return devuelve el ultimo valor agregado
+     */
     @Override
     public E peek() {
         if(!empty())return stack.elementAt(stack.size()-1);
         else return null;
     }
 
+    /**
+     *
+     * @return devuelve boolean indicando si esta vacio
+     */
     @Override
     public boolean empty() {
         return stack.isEmpty();
     }
 
+    /**
+     *
+     * @return devuelve el tamano del stack
+     */
     @Override
     public int size() {
         return stack.size();

@@ -4,6 +4,11 @@ public class ListaDoble <E>extends Lista<E>{
         inicio=null;
         fin=null;
     }
+
+    /**
+     *
+     * @param item ingresa el item a agregar (pushear)
+     */
     @Override
     public void push(E item) {
         if(!empty()){
@@ -15,6 +20,10 @@ public class ListaDoble <E>extends Lista<E>{
         }
     }
 
+    /**
+     *
+     * @return devuelve el dato elminado (del tope del stack)
+     */
     @Override
     public E pop() {
      E aEliminar=fin.valor;
@@ -29,17 +38,29 @@ public class ListaDoble <E>extends Lista<E>{
 
     }
 
+    /**
+     *
+     * @return devuelve el ulyimo termino agregado
+     */
     @Override
     public E peek() {
         return fin.valor;
     }
 
+    /**
+     *
+     * @return devuelve boolean indicando si esta vacia
+     */
     @Override
     public boolean empty() {
         if (inicio==null) return true;
         else return false;
     }
 
+    /**
+     *
+     * @return devuuelve el tamano del stack
+     */
     @Override
     public int size() {
         int contador=0;

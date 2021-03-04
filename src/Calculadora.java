@@ -26,6 +26,11 @@ public class Calculadora {
      */
     private Calculadora() { }
 
+    /**
+     *
+     * @param tipo ingresa el tipo de Stack que desea generar//opciones validas: ArrayList, Vector y Lista
+     * @param lista ingresa el tipo de lista si desea generar // opciones validas: Lista simple, Lista doble
+     */
     public void setStack(String tipo, String lista) {
         this.stack = FabricaStacks.construir(tipo, lista);
     }
